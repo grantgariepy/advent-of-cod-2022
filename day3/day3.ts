@@ -43,6 +43,7 @@ for (const k of pointsArray){
 }
 // part 2
 const thirdMatchArray: never[] = []
+
 function findMatchThird(first:string, second:string, third:string, thirdMatchArray:string[]){
   for (let i=0; i<first.length;i++){
     if (second.includes(first[i])){
