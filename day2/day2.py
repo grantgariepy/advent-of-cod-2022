@@ -1,19 +1,7 @@
-# a = rock = x = 1
-# b = paper = y = 2
-# c = scissor = z = 3
-
-# + 0 for loss
-# + 3 for draw
-# + 6 for win
-
-# game[0] = opponent game[2] = you
-
 data = open('day2.txt', 'r')
 games = data.read().strip().split('\n')
 points = []
-
 score1 = 0
-
 # part 1
 for game in games:
     if((game[0] == 'A') and (game[2] == 'X')):
@@ -34,10 +22,8 @@ for game in games:
         score1 += 2
     if((game[0] == 'C') and (game[2] == 'Z')):
         score1 += 6
-
 # part 2
 score2 = 0
-
 for game2 in games:
     # draws
     if((game2[2] == 'Y')):
@@ -63,6 +49,4 @@ for game2 in games:
             score2 += 3
         if((game2[0] == 'C')):
             score2 += 2
-
-
 print("Part 1 score:", score1, "Part 2 Score:", score2)
