@@ -3,26 +3,57 @@ export const x = "";
 const results = await Deno.readTextFile("./day3.txt")
 const ruckSacks = results.split("\n")
 
-const array1: never[] = []
-function findMatch(first:string, second:string, arrayOfMatches: string[]) {
+const letterArray: never[] = []
+function findMatch(first:string, second:string, letterArray: string[]) {
   for (let i=0; i<first.length; i++){
     if(second.includes(first[i])){
-      arrayOfMatches.push(second[second.indexOf(first[i])])
+      letterArray.push(second[second.indexOf(first[i])])
       return
     }
   }
+}
+
+const thirdMatchArray: never[] = []
+function findMatchThird(first:string, second:string,third:string,thirdMatchArray:string[]){
+  for (let i=0; i<first.length;i++){
+    if (second.includes(first[i])){
+      if(third.includes(second[second.indexOf(first[i])])){
+        thirdMatchArray.push(third[third.indexOf(first[i])])
+        return
+      }
+    }
+  }
+}
+for (let i=0; i<ruckSacks.length; i+=3){
+  const first = ruckSacks[i]
+  const second = ruckSacks[i+1]
+  const third = ruckSacks[i+2]
+  findMatchThird(first, second, third, thirdMatchArray)
 }
 
 for(const halfSack of ruckSacks){
   const halfIndex = Math.floor(halfSack.length / 2)
   const first = halfSack.slice(0, halfIndex);
   const second = halfSack.slice(halfIndex);
-  findMatch(first, second, array1);
+  findMatch(first, second, letterArray);
 }
 
 const pointsArray: number[] = []
+const pointsArrayPartTwo: number[] = []
 
-array1.forEach(convert)
+letterArray.forEach(convert)
+thirdMatchArray.forEach(convertThird)
+
+
+function convertThird(s:string){
+  if(s == s.toLowerCase()){
+    const alphaVal = s.toLowerCase().charCodeAt(0) - 96
+    pointsArrayPartTwo.push(alphaVal)
+  }else{
+    const alphaVal = s.toLowerCase().charCodeAt(0) - 96 + 26
+    pointsArrayPartTwo.push(alphaVal)
+  }
+}
 
 function convert(s:string){
   if(s == s.toLowerCase()){
@@ -34,11 +65,13 @@ function convert(s:string){
   }
 }
 
-let total = 0
+let total1 = 0
+let total2 = 0
 
 for (const k of pointsArray){
-  total+= k
+  total1 += k
 }
-
-console.log("Part1:",total)
-
+for (const p of pointsArrayPartTwo){
+  total2 +=p
+}
+console.log("Part1:",total1, "Part2:",total2)
