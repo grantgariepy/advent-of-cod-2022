@@ -1,6 +1,6 @@
 data = open('day2.txt', 'r')
 games = data.read().strip().split('\n')
-points = []
+print(games)
 score1 = 0
 # part 1
 for game in games:
