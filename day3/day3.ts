@@ -14,7 +14,7 @@ function findMatch(first:string, second:string, letterArray: string[]) {
 }
 
 const thirdMatchArray: never[] = []
-function findMatchThird(first:string, second:string,third:string,thirdMatchArray:string[]){
+function findMatchThird(first:string, second:string, third:string, thirdMatchArray:string[]){
   for (let i=0; i<first.length;i++){
     if (second.includes(first[i])){
       if(third.includes(second[second.indexOf(first[i])])){
@@ -43,7 +43,6 @@ const pointsArrayPartTwo: number[] = []
 
 letterArray.forEach(convert)
 thirdMatchArray.forEach(convertThird)
-
 
 function convertThird(s:string){
   if(s == s.toLowerCase()){
