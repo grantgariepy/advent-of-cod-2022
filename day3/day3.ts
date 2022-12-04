@@ -24,8 +24,6 @@ for(const halfSack of ruckSacks){
 
 const pointsArray: number[] = []
 
-letterArray.forEach(convert)
-
 function convert(s:string){
   if(s == s.toLowerCase()){
     const alphaVal = s.toLowerCase().charCodeAt(0) - 96
@@ -35,6 +33,8 @@ function convert(s:string){
     pointsArray.push(alphaVal)
   }
 }
+
+letterArray.forEach(convert)
 
 let total1 = 0
 
@@ -63,8 +63,6 @@ for (let i=0; i<ruckSacks.length; i+=3){
 }
 const pointsArrayPartTwo: number[] = []
 
-thirdMatchArray.forEach(convertThird)
-
 function convertThird(s:string){
   if(s == s.toLowerCase()){
     const alphaVal = s.toLowerCase().charCodeAt(0) - 96
@@ -74,6 +72,8 @@ function convertThird(s:string){
     pointsArrayPartTwo.push(alphaVal)
   }
 }
+
+thirdMatchArray.forEach(convertThird)
 
 let total2 = 0
 
