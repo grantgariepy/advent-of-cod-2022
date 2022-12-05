@@ -8,7 +8,6 @@ const totals = caloriesByElf.map(calories => {
   return calories.split('\n').reduce((acc,x) => Number(acc) + Number(x), 0)
 })
 
-
 const topThreeElves = totals.sort((a,b)=> a-b).slice(totals.length - 3)
 
 const grandTotal = topThreeElves.reduce((acc, x) => acc + x, 0)
