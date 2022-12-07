@@ -22,10 +22,10 @@ function repeatPush(times:number, fromArray:any, toArray:any){
 }
 // part2
 // function repeatPush(times:number, fromArray:any, toArray:any){
-//     const sliceSpot = fromArray.length - times
+//     const spliceSpot = fromArray.length - times
 //     const tempArray = fromArray.slice(-times, fromArray.length )
 //     toArray.push(...tempArray)
-//     fromArray.splice(sliceSpot, times)
+//     fromArray.splice(spliceSpot, times)
 // }
 
 for(const movement in directions){
