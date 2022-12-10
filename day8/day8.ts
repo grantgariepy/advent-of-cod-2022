@@ -1,8 +1,8 @@
 const input = await Deno.readTextFile("day8.txt");
 
-const map = input.split("\n").map((l) => l.split("").map(Number) as number[]),
-  size = map.length,
-  dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]] as number[][];
+const map = input.split("\n").map((l) => l.split("").map(Number));
+const size = map.length;
+const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
 
 const part1 = (vmap: number[][]) => {
   const markDir = (
@@ -20,13 +20,12 @@ const part1 = (vmap: number[][]) => {
       y += vy;
     }
   };
-
   // run visibility check from all the sides
   map.forEach((_r, n) =>
     dirs.forEach((d) =>
       markDir(
-        !d[0] ? n : d[0] == 1 ? 0 : size - 1,
-        !d[1] ? n : d[1] == 1 ? 0 : size - 1,
+        !d[0] ? n : (d[0] == 1 ? 0 : size - 1),
+        !d[1] ? n : (d[1] == 1 ? 0 : size - 1),
         ...d,
       )
     )
@@ -56,11 +55,9 @@ const visDir = (
 
 const part2 = () =>
   Math.max(
-    ...map
-      .map((r, y) =>
-        r.map((_v, x) => dirs.reduce((a, d) => a * visDir(x, y, ...d), 1))
-      )
-      .flat(),
+    ...map.map((r, y) =>
+      r.map((_v, x) => dirs.reduce((a, d) => a * visDir(x, y, ...d), 1))
+    ).flat(),
   );
 
 console.log(part1(Array.from({ length: size }, () => [])));
