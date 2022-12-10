@@ -1,63 +1,67 @@
-const input = await Deno.readTextFile("day8.ts");
+const input = await Deno.readTextFile("day8.txt");
 
-const s = input.strip();
+const map = input.split("\n").map((l) => l.split("").map(Number) as number[]),
+  size = map.length,
+  dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]] as number[][];
 
-const g = s.split("\n").map((x) => x.map((y) => parseInt(y, 10)));
-const n = g.length;
-const m = g[0].length;
-
-const vis = new Set<[number, number]>();
-for (let i = 0; i < n; i++) {
-  for (let j = 0; j < m; j++) {
-    let isviz = false;
-    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-      let ni = i + dx;
-      let nj = j + dy;
-      let v = true;
-      while (ni >= 0 && ni < n && nj >= 0 && nj < m) {
-        if (g[ni][nj] >= g[i][j]) {
-          v = false;
-          break;
-        }
-        ni += dx;
-        nj += dy;
-      }
-      if (v) {
-        isviz = true;
-        break;
-      }
+const part1 = (vmap: number[][]) => {
+  const markDir = (
+    x: number,
+    y: number,
+    vx: number,
+    vy: number,
+    max = map[y][x],
+  ) => {
+    vmap[y][x] = 1; // mark also the starting point
+    while (x >= 0 && y >= 0 && x < size && y < size) {
+      if (map[y][x] > max) vmap[y][x] = 1;
+      max = Math.max(max, map[y][x]);
+      x += vx;
+      y += vy;
     }
-    if (isviz) {
-      vis.add([i, j]);
-    }
+  };
+
+  // run visibility check from all the sides
+  map.forEach((_r, n) =>
+    dirs.forEach((d) =>
+      markDir(
+        !d[0] ? n : d[0] == 1 ? 0 : size - 1,
+        !d[1] ? n : d[1] == 1 ? 0 : size - 1,
+        ...d,
+      )
+    )
+  );
+
+  return vmap.flat().length;
+};
+
+const visDir = (
+  x: number,
+  y: number,
+  vx: number,
+  vy: number,
+  h = map[y][x],
+  res = 0,
+) => {
+  x += vx;
+  y += vy;
+  while (x >= 0 && y >= 0 && x < size && y < size) {
+    res++;
+    if (map[y][x] >= h) break;
+    x += vx;
+    y += vy;
   }
-}
+  return res;
+};
 
-console.log(vis.size);
+const part2 = () =>
+  Math.max(
+    ...map
+      .map((r, y) =>
+        r.map((_v, x) => dirs.reduce((a, d) => a * visDir(x, y, ...d), 1))
+      )
+      .flat(),
+  );
 
-let r = 0;
-
-for (let i = 0; i < n; i++) {
-  for (let j = 0; j < m; j++) {
-    const vd = [];
-    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0]]) {
-      let ni = i + dx;
-      let nj = j + dy;
-      let c = 0;
-      let v = true;
-      while (ni >= 0 && ni < n && nj >= 0 && nj < m) {
-        if (g[ni][nj] >= g[i][j]) {
-          v = false;
-          break;
-        }
-        ni += dx;
-        nj += dy;
-        c += 1;
-      }
-      vd.push(c + (ni >= 0 && ni < n && nj >= 0 && nj < m ? 1 : 0));
-    }
-    r = Math.max(r, vd[0] * vd[1] * vd[2] * vd[3]);
-  }
-}
-
-console.log(r);
+console.log(part1(Array.from({ length: size }, () => [])));
+console.log(part2());
