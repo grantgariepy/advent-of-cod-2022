@@ -53,12 +53,13 @@ const visDir = (
   return res;
 };
 
-const part2 = () =>
+const part2 = () => {
   Math.max(
     ...map.map((r, y) =>
       r.map((_v, x) => dirs.reduce((a, d) => a * visDir(x, y, ...d), 1))
     ).flat(),
   );
+};
 
 console.log(part1(Array.from({ length: size }, () => [])));
 console.log(part2());
